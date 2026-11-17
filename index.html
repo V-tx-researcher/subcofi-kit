@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Relatório de atividade – SubCOFI</title><base target="_top">
+<style>
+:root{--v:#7A1F2B;--c:#F6EDEF;--t:#222;--m:#666}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--t);background:#fafafa;margin:0;padding:16px}
+.w{max-width:720px;margin:0 auto;background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:20px}
+h1{color:var(--v);font-size:21px;margin:0 0 4px}
+.s{color:var(--m);font-size:13px;margin:0 0 16px}
+label{display:block;font-weight:bold;font-size:14px;margin:14px 0 4px}
+label small{font-weight:normal;color:var(--m)}
+input,select,textarea{width:100%;padding:9px;border:1px solid #ccc;border-radius:6px;font:inherit;font-size:15px}
+textarea{min-height:120px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media(max-width:560px){.g{grid-template-columns:1fr}}
+.chk label{display:inline-flex;align-items:center;gap:6px;font-weight:normal;margin:4px 14px 4px 0}
+.chk input{width:auto}
+button{background:var(--v);color:#fff;border:0;border-radius:6px;padding:11px 16px;font-size:15px;cursor:pointer}
+button.sec{background:#fff;color:var(--v);border:1px solid var(--v)}
+.av{background:var(--c);border-radius:6px;padding:10px;font-size:13px;margin-top:12px}
+#fotosPrev img{width:90px;height:90px;object-fit:cover;border-radius:6px;margin:4px}
+.caixa{border:1px solid #ddd;border-radius:6px;padding:10px;margin:6px 0;white-space:pre-wrap;font-size:14px;background:#fcfcfc}
+.lin{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+#msg{margin-top:12px;font-weight:bold}
+.oculto{display:none}
+</style></head><body><div class="w">
+<div id="entrada">
+<h1>Relatório de atividade – SubCOFI</h1>
+<p class="s">Digite o código de acesso da sua Seccional. Os dados vão só para a planilha da sua Seccional.</p>
+<div id="semLink" class="av oculto">Este link está incompleto. Peça à coordenação da sua Seccional o link completo do formulário (ele termina com <b>?s=…</b>).</div>
+<label>Código de acesso</label><input id="codigo" autocomplete="off">
+<div class="lin"><span></span><button id="entrar" onclick="entrar()">Entrar</button></div>
+<div id="msg0"></div>
+</div>
+<div id="form" class="oculto">
+<h1>Relatório de atividade – SubCOFI</h1>
+<p class="s">Preencha, registre e copie o e-mail pronto para enviar ao CRESS-SP.</p>
+
+<label>Atividade *</label><input id="atividade" placeholder="Ex.: 10ª Reunião Ordinária do CMAS">
+<div class="g">
+<div><label>Data *</label><input id="data" type="date"></div>
+<div><label>Horário</label><input id="horario" placeholder="Ex.: 14h às 17h"></div>
+</div>
+<div class="g">
+<div><label>Formato</label><select id="formato"><option>Presencial</option><option>Virtual</option><option>Híbrido</option></select></div>
+<div><label>Local</label><input id="local" placeholder="Ex.: Câmara Municipal / Google Meet"></div>
+</div>
+<label>Endereço</label><input id="endereco">
+<div class="g">
+<div><label>Município *</label><select id="municipio"></select></div>
+<div><label>Tipo de ação *</label><select id="tipo"></select></div>
+</div>
+<label>Temática</label><input id="tematica">
+<label>Público</label><input id="publico" placeholder="Ex.: Representantes do CRESS, CRP e CMAS">
+<label>Convidados integrantes da mesa</label><textarea id="mesa" style="min-height:60px"></textarea>
+<label>Total de participantes</label><input id="total" type="number" min="0">
+<label>Participação da SubCOFI <small>(marque todos)</small></label><div class="chk" id="quem"></div>
+<label>Relato da atividade * <small>(pautas, discussões, encaminhamentos)</small></label><textarea id="relato"></textarea>
+<label>Fotos <small>(até 10; são reduzidas antes de enviar)</small></label><input id="fotos" type="file" accept="image/*" multiple>
+<div id="fotosPrev"></div>
+<div class="av"><label style="margin:0;font-weight:normal"><input type="checkbox" id="consent" style="width:auto"> As pessoas que aparecem nas fotos autorizaram o uso das imagens. Não incluí dados sigilosos no relato.</label></div>
+
+<div class="g">
+<div><label>Seu nome *</label><input id="nome"></div>
+<div><label>Cargo/função</label><input id="cargo" placeholder="Ex.: Coordenadora da Seccional"></div>
+</div>
+<div class="g">
+<div><label>Seu e-mail *</label><input id="emailPessoa" type="email"></div>
+<div><label>Cidade da assinatura</label><input id="cidade" value="São José do Rio Preto"></div>
+</div>
+<label>E-mail do CRESS-SP (destino)</label><input id="destino" type="email">
+
+<div class="lin"><span class="s" style="margin:0">* obrigatório</span><button id="enviar" onclick="registrar()">Registrar e gerar relatório</button></div>
+<div id="msg"></div>
+</div>
+
+<div id="resultado" class="oculto">
+<h1>Pronto! Atividade registrada.</h1>
+<p class="s">Abra o seu e-mail, clique em "Novo e-mail" e cole cada parte. Se precisar anexar, use "Baixar Word (.docx)".</p>
+<label>Para</label><div class="caixa" id="rPara"></div><button class="sec" onclick="copiarTexto('rPara')">Copiar destinatário</button>
+<label>Assunto</label><div class="caixa" id="rAssunto"></div><button class="sec" onclick="copiarTexto('rAssunto')">Copiar assunto</button>
+<label>Texto</label><div class="caixa" id="rTexto"></div><button class="sec" onclick="copiarHtml()">Copiar texto</button>
+<div class="lin"><button onclick="baixarDocx()">Baixar Word (.docx)</button><button class="sec" onclick="location.reload()">Registrar outra atividade</button></div>
+<div id="msg2" class="s" style="margin-top:10px"></div>
+</div>
+</div>
+<script>
+var R = null, FOTOS = [];
+function el(i){return document.getElementById(i)}
+function opcoes(sel, lista){ el(sel).innerHTML = '<option value=""></option>' + lista.map(function(x){return '<option>'+x.replace(/</g,'&lt;')+'</option>'}).join(''); }
+function carregar(D){
+  opcoes('municipio', D.municipios); opcoes('tipo', D.tipos);
+  el('quem').innerHTML = D.equipe.map(function(n,i){return '<label><input type="checkbox" value="'+n.replace(/"/g,'&quot;')+'"> '+n+'</label>'}).join('');
+  el('destino').value = D.destino || '';
+}
+function reduzir(arq){
+  return new Promise(function(ok, falha){
+    var fr = new FileReader();
+    fr.onload = function(){ var img = new Image(); img.onload = function(){
+      var m = 1400, e = Math.min(1, m / Math.max(img.width, img.height));
+      var c = document.createElement('canvas'); c.width = Math.round(img.width*e); c.height = Math.round(img.height*e);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      ok(c.toDataURL('image/jpeg', 0.75).split(',')[1]);
+    }; img.onerror = falha; img.src = fr.result; };
+    fr.onerror = falha; fr.readAsDataURL(arq);
+  });
+}
+function mostrarFotos(){
+  var arqs = Array.prototype.slice.call(el('fotos').files, 0, 10);
+  el('fotosPrev').innerHTML = 'Preparando fotos…';
+  Promise.all(arqs.map(reduzir)).then(function(b){
+    FOTOS = b; el('fotosPrev').innerHTML = b.map(function(x){return '<img src="data:image/jpeg;base64,'+x+'">'}).join('');
+  }).catch(function(){ el('fotosPrev').innerHTML = 'Não foi possível ler uma das fotos.'; });
+}
+function registrar(){
+  var ids = ['atividade','data','horario','formato','local','endereco','municipio','tipo','tematica','publico','mesa','total','relato','nome','cargo','emailPessoa','cidade','destino'];
+  var d = {}; ids.forEach(function(i){ d[i] = el(i).value.trim(); });
+  d.quem = Array.prototype.slice.call(el('quem').querySelectorAll('input:checked')).map(function(x){return x.value});
+  var falta = [['atividade','Atividade'],['data','Data'],['municipio','Município'],['tipo','Tipo de ação'],['relato','Relato'],['nome','Seu nome'],['emailPessoa','Seu e-mail']]
+    .filter(function(x){return !d[x[0]]}).map(function(x){return x[1]});
+  if (falta.length){ el('msg').textContent = 'Preencha: ' + falta.join(', ') + '.'; return; }
+  if (FOTOS.length && !el('consent').checked){ el('msg').textContent = 'Confirme a autorização de uso das imagens.'; return; }
+  d.fotos = FOTOS.map(function(b){return {b64:b}});
+  el('enviar').disabled = true; el('msg').textContent = 'Registrando e gerando o relatório… pode levar até 1 minuto.';
+  chamar('registrar', d).then(function(j){
+    var r = j.resultado; R = r; el('form').className = 'oculto'; el('resultado').className = '';
+    el('rPara').textContent = r.para || '(digite o e-mail do CRESS-SP)';
+    el('rAssunto').textContent = r.assunto; el('rTexto').innerHTML = r.html; window.scrollTo(0,0);
+  }).catch(function(e){ el('enviar').disabled = false; el('msg').textContent = 'Erro: ' + e.message; });
+}
+// Página pública: o endereço do script da Seccional vem no próprio link (?s=CODIGO_DA_IMPLANTACAO).
+var ID_SCRIPT = new URLSearchParams(location.search).get('s') || '';
+var URL_SCRIPT = 'https://script.google.com/macros/s/' + ID_SCRIPT + '/exec';
+function chamar(acao, dados){
+  return fetch(URL_SCRIPT, { method: 'POST', body: JSON.stringify({ acao: acao, codigo: el('codigo').value, dados: dados }) })
+    .then(function(r){ return r.json(); })
+    .then(function(j){ if (!j.ok) throw new Error(j.erro); return j; });
+}
+function entrar(){
+  el('entrar').disabled = true; el('msg0').textContent = 'Verificando…';
+  chamar('dados').then(function(j){
+    carregar(j.dados); el('entrada').className = 'oculto'; el('form').className = '';
+  }).catch(function(e){ el('entrar').disabled = false; el('msg0').textContent = 'Não foi possível entrar: ' + e.message; });
+}
+if (!ID_SCRIPT){ el('semLink').className = 'av'; el('entrar').disabled = true; }
+el('codigo').addEventListener('keydown', function(ev){ if (ev.key === 'Enter') entrar(); });
+function copiarNo(no){
+  var s = window.getSelection(), r = document.createRange(); r.selectNodeContents(no); s.removeAllRanges(); s.addRange(r);
+  var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+  s.removeAllRanges(); el('msg2').textContent = ok ? 'Copiado! Agora cole no seu e-mail (Ctrl+V).' : 'Selecione o texto e use Ctrl+C.';
+}
+function copiarTexto(id){ copiarNo(el(id)); }
+function copiarHtml(){ copiarNo(el('rTexto')); }
+function baixarDocx(){ window.open(R.docxUrl, '_blank'); }
+el('fotos').addEventListener('change', mostrarFotos);
+</script></body></html>

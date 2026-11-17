@@ -10,6 +10,7 @@ Ferramenta para Subcomissões de Orientação e Fiscalização (SubCOFI) do CRES
 | `SubCOFI_Planilha_Modelo.xlsx` | Planilha em branco: Demandas, Ações e eventos, Painel, Listas, Equipe, Municípios |
 | `SubCOFI_Script.gs` | Menu SubCOFI (relatório por período, pauta, mapas) e formulário de relatório de atividade |
 | `index.html` | Página pública do formulário (este site). Envia os dados para a planilha da Seccional |
+| `Guia_Kit_SubCOFI.pdf` | Guia rápido de 1 página: usar e criar a versão da sua Seccional |
 
 ## Instalar na sua Seccional (uma vez)
 

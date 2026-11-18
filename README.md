@@ -29,4 +29,4 @@ Ferramenta para Subcomissões de Orientação e Fiscalização (SubCOFI) do CRES
 - O formulário **não envia e-mail**: ele monta o texto para a pessoa copiar e enviar da própria conta.
 - Não registre nomes de pessoas atendidas, denunciantes ou dados sigilosos.
 
-Mapas por município: disponíveis para as localidades com contorno no script (região de São José do Rio Preto). Nas demais Seccionais, painel e relatórios funcionam normalmente, com o mapa em branco.
+**Mapa dos seus municípios:** o mapa interativo vem pronto só para a Seccional de São José do Rio Preto. Para ter a versão completa, com o mapa da sua região, entre em contato com **Vinícius Araújo Pereira** (SubCOFI – Seccional São José do Rio Preto, CRESS-SP) e envie a lista de municípios da sua Seccional. Sem isso, painel, formulário e relatórios funcionam normalmente, com o mapa em branco.
